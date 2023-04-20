@@ -3,14 +3,36 @@
   width: 100%;
 }
 
-.dark-mode {
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #ffffff;
+  color: #1a73e8;
+}
+
+body.dark-mode {
   background-color: #121212;
   color: #fff;
 }
 
-.light-mode {
-  background-color: #f8f9fa;
-  color: #212529;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Slab', serif;
+}
+
+.card {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+.connect-wallet-btn {
+  background-color: #1a73e8;
+  border-color: #1a73e8;
+  color: white;
+}
+
+.connect-wallet-btn:hover {
+  background-color: #1558d6;
+  border-color: #1558d6;
+  color: white;
 }
 
 a {
@@ -20,18 +42,6 @@ a {
 a:hover {
   color: inherit;
   text-decoration: underline;
-}
-
-.connect-wallet-btn {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: white;
-}
-
-.connect-wallet-btn:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
-  color: white;
 }
 
 .toggle-dark-mode-btn {

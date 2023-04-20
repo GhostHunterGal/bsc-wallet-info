@@ -2,9 +2,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Web3 from 'web3';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, ListGroup } from 'react-bootstrap';
-
+import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap';
 import './App.css';
+import Header from './components/Header';
 
 const BSCSCAN_API_KEY = process.env.REACT_APP_BSCSCAN_API_KEY || '';
 const BSCSCAN_API_BASE_URL = process.env.REACT_APP_BSCSCAN_API_BASE_URL;
@@ -68,10 +68,24 @@ export const App: React.FC = () => {
         const txList = txListResponse.data.result.slice(0, 10);
         setTransactions(txList);
       } else {
+       
         console.error('Failed to fetch transactions. Please check the BSCSCAN_API_KEY and try again.');
       }
     }
   }, [web3, account]);
+
+  const getObfuscatedAddress = (address: string) => {
+    if (!address) return '';
+    return `${address.substring(0, 3)}...${address.substring(address.length - 3)}`;
+  };
+
+  React.useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     loadWeb3();
@@ -85,24 +99,14 @@ export const App: React.FC = () => {
     <div className={`app ${darkMode ? 'dark-mode' : 'light-mode'}`}>
       <div className="app-wrapper">
         <Container>
-          <Row className="justify-content-between align-items-center">
-            <Col>
-              <h1 className="mb-0">BSC Wallet Info</h1>
-            </Col>
-            <Col xs="auto">
-              <Button className="connect-wallet-btn" onClick={connectWallet}>
-                Connect Wallet
-              </Button>
-            </Col>
-            <Col xs="auto">
-              <Button
-                className={`toggle-dark-mode-btn ${darkMode ? 'dark-mode-icon' : 'light-mode-icon'}`}
-                onClick={toggleDarkMode}
-              >
-                {darkMode ? '🌞' : '🌙'}
-              </Button>
-            </Col>
-          </Row>
+          <Header
+            title="BSC Wallet Info"
+            darkMode={darkMode}
+            onClickDarkMode={toggleDarkMode}
+            account={account}
+            getObfuscatedAddress={getObfuscatedAddress}
+            connectWallet={connectWallet}
+          />
           <Row className="justify-content-center">
             <Col md={8}>
               <Card className="mt-5">
@@ -135,6 +139,8 @@ export const App: React.FC = () => {
       </div>
     </div>
   );
+  
+  
 };
 
 export default App;
